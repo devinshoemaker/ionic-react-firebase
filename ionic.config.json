@@ -1,0 +1,7 @@
+{
+  "name": "Ionic React Firebase",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
