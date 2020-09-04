@@ -15,7 +15,7 @@ import {
 import { add } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, selectAllTodos } from '../redux/todoActions';
+import { addTodo, deleteTodo, selectAllTodos } from '../redux/todoActions';
 
 const TodoListPage = () => {
   const [showNewTodoAlert, setShowNewTodoAlert] = useState(false);
@@ -33,7 +33,10 @@ const TodoListPage = () => {
       <IonContent>
         <IonList>
           {todos.map((todo) => (
-            <IonItem key={todo.id}>
+            <IonItem
+              key={todo.id}
+              onClick={() => dispatch(deleteTodo(todo.id))}
+            >
               <IonLabel>{todo.content}</IonLabel>
             </IonItem>
           ))}

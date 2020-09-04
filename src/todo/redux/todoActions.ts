@@ -18,3 +18,12 @@ export const addTodo = (content: string) => {
     },
   };
 };
+
+export const deleteTodo = (id: number) => {
+  return {
+    type: 'todo/deleteTodo',
+    payload: {
+      id,
+    },
+  };
+};
