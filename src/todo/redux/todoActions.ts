@@ -13,8 +13,6 @@ export interface TodoAction {
   };
 }
 
-export const selectAllTodos = (state: RootState) => state.todos.items;
-
 export const addTodo = (todo: Todo) => {
   return {
     type: 'todo/addTodo',

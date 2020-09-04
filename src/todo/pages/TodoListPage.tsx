@@ -20,8 +20,8 @@ import {
   deleteTodo,
   fetchTodosIfNeeded,
   postTodo,
-  selectAllTodos,
 } from '../redux/todoActions';
+import { selectAllTodos } from "../redux/todoSelectors";
 
 const TodoListPage = () => {
   const [showNewTodoAlert, setShowNewTodoAlert] = useState(false);
