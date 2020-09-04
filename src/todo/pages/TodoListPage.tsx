@@ -15,12 +15,20 @@ import {
 import { add } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, deleteTodo, selectAllTodos } from '../redux/todoActions';
+import Todo from '../interfaces/todo';
+import {
+  deleteTodo,
+  fetchTodosIfNeeded,
+  postTodo,
+  selectAllTodos,
+} from '../redux/todoActions';
 
 const TodoListPage = () => {
   const [showNewTodoAlert, setShowNewTodoAlert] = useState(false);
-  const todos = useSelector(selectAllTodos);
+  const todos: Todo[] = useSelector(selectAllTodos);
   const dispatch = useDispatch();
+
+  dispatch(fetchTodosIfNeeded());
 
   return (
     <IonPage>
@@ -35,7 +43,11 @@ const TodoListPage = () => {
           {todos.map((todo) => (
             <IonItem
               key={todo.id}
-              onClick={() => dispatch(deleteTodo(todo.id))}
+              onClick={() => {
+                if (todo.id) {
+                  dispatch(deleteTodo(todo.id));
+                }
+              }}
             >
               <IonLabel>{todo.content}</IonLabel>
             </IonItem>
@@ -66,7 +78,7 @@ const TodoListPage = () => {
             {
               text: 'Save',
               handler: (alertData) => {
-                dispatch(addTodo(alertData.content));
+                dispatch(postTodo({ content: alertData.content }));
               },
             },
           ]}
