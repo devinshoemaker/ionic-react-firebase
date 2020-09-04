@@ -40,3 +40,29 @@ export const receiveTodos = (todos: Todo[]) => {
     },
   };
 };
+
+export const fetchTodos = () => {
+  return {
+    type: 'todo/fetchTodos',
+  };
+};
+
+export const postTodo = (todo: Todo) => {
+  return {
+    type: 'todo/postTodo',
+    payload: {
+      todo,
+    },
+  };
+};
+
+export const deleteTodo = (id: string) => {
+  return {
+    type: 'todo/deleteTodo',
+    payload: {
+      todo: {
+        id,
+      },
+    },
+  };
+};
