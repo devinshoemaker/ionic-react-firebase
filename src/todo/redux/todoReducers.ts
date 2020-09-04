@@ -1,22 +1,15 @@
 import Todo from '../interfaces/todo';
 import { TodoAction } from './todoActions';
 
-const initialState: Todo[] = [
-  {
-    id: 1,
-    content: 'First todo',
-  },
-  {
-    id: 2,
-    content: 'Second todo',
-  },
-];
+const initialState: Todo[] = [];
 
-function todoReducer(state = initialState, action: TodoAction) {
+function todoReducers(state = initialState, action: TodoAction) {
   switch (action.type) {
+    case 'todo/addTodo':
+      return [...state, action.payload];
     default:
       return state;
   }
 }
 
-export default todoReducer;
+export default todoReducers;

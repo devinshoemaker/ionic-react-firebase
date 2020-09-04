@@ -1,6 +1,10 @@
 import {
+  IonAlert,
   IonContent,
+  IonFab,
+  IonFabButton,
   IonHeader,
+  IonIcon,
   IonItem,
   IonLabel,
   IonList,
@@ -8,12 +12,15 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectAllTodos } from '../redux/todoActions';
+import { add } from 'ionicons/icons';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodo, selectAllTodos } from '../redux/todoActions';
 
 const TodoListPage = () => {
+  const [showNewTodoAlert, setShowNewTodoAlert] = useState(false);
   const todos = useSelector(selectAllTodos);
+  const dispatch = useDispatch();
 
   return (
     <IonPage>
@@ -22,14 +29,45 @@ const TodoListPage = () => {
           <IonTitle>Todo List</IonTitle>
         </IonToolbar>
       </IonHeader>
+
       <IonContent>
         <IonList>
           {todos.map((todo) => (
-            <IonItem>
+            <IonItem key={todo.id}>
               <IonLabel>{todo.content}</IonLabel>
             </IonItem>
           ))}
         </IonList>
+
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton onClick={() => setShowNewTodoAlert(true)}>
+            <IonIcon icon={add} />
+          </IonFabButton>
+        </IonFab>
+
+        <IonAlert
+          isOpen={showNewTodoAlert}
+          onDidDismiss={() => setShowNewTodoAlert(false)}
+          header={'New Todo'}
+          inputs={[
+            {
+              name: 'content',
+              type: 'text',
+            },
+          ]}
+          buttons={[
+            {
+              text: 'Cancel',
+              role: 'cancel',
+            },
+            {
+              text: 'Save',
+              handler: (alertData) => {
+                dispatch(addTodo(alertData.content));
+              },
+            },
+          ]}
+        />
       </IonContent>
     </IonPage>
   );
