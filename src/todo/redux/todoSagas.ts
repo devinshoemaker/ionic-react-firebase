@@ -11,7 +11,7 @@ import {
 import { TodoState } from './todoReducers';
 
 function* fetchTodos() {
-  yield put(requestTodos());
+  put(requestTodos());
   const querySnapshot = yield firestore.collection('todos').get();
 
   let todos: Todo[] = [];
@@ -23,7 +23,13 @@ function* fetchTodos() {
 }
 
 const shouldFetchTodos = (todoState: TodoState) => {
-  return true;
+  if (!todoState) {
+    return true;
+  } else if (todoState.isFetching) {
+    return false;
+  } else {
+    return todoState.didInvalidate;
+  }
 };
 
 function* fetchTodosIfNeeded() {

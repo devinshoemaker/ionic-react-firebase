@@ -35,7 +35,6 @@ function todoReducers(state = initialState, action: TodoAction): TodoState {
       return {
         ...state,
         isFetching: true,
-        didInvalidate: false,
       };
     case 'todo/receiveTodos':
       return {
