@@ -19,7 +19,7 @@ function todoReducers(state = initialState, action: TodoAction): TodoState {
       return {
         ...state,
         didInvalidate: true,
-        items: action.payload.todo
+        items: action.payload?.todo
           ? [...state.items, action.payload.todo]
           : [...state.items],
       };
@@ -28,7 +28,7 @@ function todoReducers(state = initialState, action: TodoAction): TodoState {
         ...state,
         didInvalidate: true,
         items: state.items.filter(
-          (todo) => todo.id !== action.payload.todo?.id
+          (todo) => todo.id !== action.payload?.todo?.id
         ),
       };
     case 'todo/requestTodos':
@@ -42,7 +42,7 @@ function todoReducers(state = initialState, action: TodoAction): TodoState {
         ...state,
         isFetching: false,
         didInvalidate: false,
-        items: action.payload.todos ? action.payload.todos : [],
+        items: action.payload?.todos ? action.payload.todos : [],
       };
     default:
       return state;

@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { firestore } from '../../firebase';
-import { RootState } from '../../rootReducer';
+import { RootState } from '../../store';
 import Todo from '../interfaces/todo';
 import {
   addTodo,

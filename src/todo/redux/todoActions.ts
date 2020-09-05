@@ -2,7 +2,7 @@ import Todo from '../interfaces/todo';
 
 export interface TodoAction {
   type: string;
-  payload: {
+  payload?: {
     todo?: Todo;
     todos?: Todo[];
   };
