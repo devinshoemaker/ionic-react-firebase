@@ -16,12 +16,8 @@ import { add } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Todo from '../interfaces/todo';
-import {
-  deleteTodo,
-  fetchTodos,
-  postTodo,
-  selectAllTodos,
-} from '../redux/todoSlice';
+import { deleteTodo, postTodo, selectAllTodos } from '../redux/todoSlice';
+import { fetchTodos } from '../redux/todoActions';
 
 const TodoListPage = () => {
   const [showNewTodoAlert, setShowNewTodoAlert] = useState(false);
