@@ -14,17 +14,13 @@ import {
 } from '@ionic/react';
 import { add } from 'ionicons/icons';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Todo from '../interfaces/todo';
-import { deleteTodo, fetchTodosIfNeeded, postTodo } from '../redux/todoThunks';
-import { selectAllTodos } from '../redux/todoSelectors';
+import { useDeleteTodo, usePostTodo, useSelectAllTodos } from '../todoQueries';
 
 const TodoListPage = () => {
   const [showNewTodoAlert, setShowNewTodoAlert] = useState(false);
-  const todos: Todo[] = useSelector(selectAllTodos);
-  const dispatch = useDispatch();
-
-  dispatch(fetchTodosIfNeeded());
+  const { data: todos } = useSelectAllTodos();
+  const [addTodo] = usePostTodo();
+  const [deleteTodo] = useDeleteTodo();
 
   return (
     <IonPage>
@@ -35,20 +31,24 @@ const TodoListPage = () => {
       </IonHeader>
 
       <IonContent>
-        <IonList>
-          {todos.map((todo) => (
-            <IonItem
-              key={todo.id}
-              onClick={() => {
-                if (todo.id) {
-                  dispatch(deleteTodo(todo.id));
-                }
-              }}
-            >
-              <IonLabel>{todo.content}</IonLabel>
-            </IonItem>
-          ))}
-        </IonList>
+        {todos ? (
+          <IonList>
+            {todos.map((todo) => (
+              <IonItem
+                key={todo.id}
+                onClick={() => {
+                  if (todo.id) {
+                    deleteTodo(todo.id);
+                  }
+                }}
+              >
+                <IonLabel>{todo.content}</IonLabel>
+              </IonItem>
+            ))}
+          </IonList>
+        ) : (
+          ''
+        )}
 
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton onClick={() => setShowNewTodoAlert(true)}>
@@ -74,7 +74,7 @@ const TodoListPage = () => {
             {
               text: 'Save',
               handler: (alertData) => {
-                dispatch(postTodo({ content: alertData.content }));
+                addTodo({ content: alertData.content });
               },
             },
           ]}
